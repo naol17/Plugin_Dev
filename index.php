@@ -1,2 +1,2 @@
 <?php
-// This is nonsense. 
+// This is nonsense.
