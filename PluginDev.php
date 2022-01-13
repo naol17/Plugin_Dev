@@ -25,3 +25,22 @@ function mypg_socialprofiles(){
         array()
     );
 }
+// <!-- default profiles when first installed  -->
+// <!-- __ is the wordpress translation function  -->
+function mypg_default_profiles($profiles){
+    $profiles['facebook'] = array(
+        'id' => 'mypg_facebook',
+        'label'             => __( 'Facebook profile', 'https://facebook.com' ),
+		'class'             => 'facebook',
+		'description'       => __( 'Enter your Facebook profile URL', 'https://facebook.com' ),
+		'priority'          => 10,
+		'type'              => 'icon',
+		'default'           => '',
+        // <!-- the text we entered is not cause any harm and sanitized     -->
+		'sanitize_callback' => 'sanitize_text_field',
+    );
+
+    // <!-- returning the modified profile -->
+    return $profiles;
+}
+add_filter('mypg_profiles', 'mypg_default_profiles');
