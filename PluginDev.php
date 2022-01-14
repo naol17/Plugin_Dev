@@ -107,7 +107,8 @@ class icons extends WP_Widget{
         parent:: __buildfunction('My contact medias', 'Social Contacts', $widgetOps,$controlOps);
     }
 
-    // to print to the actual front end of the website 
+    // to print to the actual front end of the website
+
     public function frontPageWidget($args, $instance){
         echo wp_kses_post( $args['before_widget']);
 
@@ -118,14 +119,43 @@ class icons extends WP_Widget{
         echo wp_kses_post( $args['after_widget'] );
 
     }
+
+    public function form($instance){
+
+        // controls actual widget form 
+        // get the saved title.
+
+	    $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+        $disc = !empty($instance['description'])? $instance['description']:'';
+	    ?>
+
+	    <p>
+		    <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'hd-extensible-social-profiles-widget' ); ?></label> 
+		    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+	    </p>
+        <p>
+		    <label for="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>"><?php esc_attr_e( 'Description:', 'PluginDev' ); ?></label> 
+		    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'description' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+	    </p>
+
+	    <?php
+    }
+
+    public function update($updateValue, $previousevalue){
+         
+        $theInstance =array();
+
+            // add the title and description to the empty array created 
+		$theInstance['title'] = ( ! empty( $updateValue['title'] ) ) ? strip_tags( $updateValue['title'] ) : '';
+        $theInstance['description'] = ( ! empty( $updateValue['description'] ) ) ? strip_tags( $updateValue['description'] ) : '';
+
+        return $theInstance;
+
+
+    }
+
 }
-
-
-
-
 
 function register_widget(){
     register_widget('icons');
 }
-
-add_action( 'widget_init', 'register_widget')
