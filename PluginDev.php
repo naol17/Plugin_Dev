@@ -159,3 +159,28 @@ class icons extends WP_Widget{
 function register_widget(){
     register_widget('icons');
 }
+
+add_action( 'widget_init', 'register_widget')
+
+// output the widget title 
+
+public function printTitle($args, $instance){
+    if(! empty($instance['title'])){
+
+        if ( ! empty( $args['before_title'] ) ) {
+
+			echo wp_kses_post( $args['before_title'] );
+
+		}
+
+        echo esc_html( $instance['title'] );
+
+		if ( ! empty( $args['after_title'] ) ) {
+
+            echo wp_kses_post( $args['after_title'] );
+
+		}
+    }
+}
+
+add_action( 'icons_output','printTitle' )
