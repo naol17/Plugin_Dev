@@ -1,5 +1,5 @@
 <?php
-/* Plugin Name:       MyPg
+/* Plugin Name:       MyPglugin 
  * Plugin URI:        https://socialmedia.com
  * Description:       This is a social media adding plugin to wordpress website helps to add and delete your social media icons .
  * Version:           1.0.0
@@ -57,8 +57,8 @@ function mypg_profile_setting($wp_customize){
             // <!-- this is the section added to the customizer as a reference id -->
             'mypg_social',
             array(
-                'title' => __('Social Plugin'),
-                'description' => __( 'Add social Icons here.' ),
+                'title' => __('My Connection'),
+                'description' => __( 'Add social Connections here.' ),
 				'priority' => 160,
 				'capability' => 'edit_theme_options',
             )
@@ -88,3 +88,44 @@ function mypg_profile_setting($wp_customize){
 
     }
 }
+add_action( 'customize_register', 'mypg_profile_setting' )
+
+// class for the socials 
+     
+class icons extends WP_Widget{
+
+    public function __buildfunction(){
+        $widgetOps = array(
+            'classname' => 'My contact medias',
+            'description' => 'Display social medias','PluginDev' 
+        );
+
+        $controlOps = array(
+            'id_base' => 'My contact medias',
+        );
+
+        parent:: __buildfunction('My contact medias', 'Social Contacts', $widgetOps,$controlOps);
+    }
+
+    // to print to the actual front end of the website 
+    public function frontPageWidget($args, $instance){
+        echo wp_kses_post( $args['before_widget']);
+
+        // action that out put the widget
+        do_action('icons_output', $args, $instance);
+
+        // after widget
+        echo wp_kses_post( $args['after_widget'] );
+
+    }
+}
+
+
+
+
+
+function register_widget(){
+    register_widget('icons');
+}
+
+add_action( 'widget_init', 'register_widget')
