@@ -44,3 +44,47 @@ function mypg_default_profiles($profiles){
     return $profiles;
 }
 add_filter('mypg_profiles', 'mypg_default_profiles');
+
+
+// <!-- function that is added to the customiser to add fields to the customiser   -->
+function mypg_profile_setting($wp_customize){
+    $social_pro = mypg_socialprofiles();
+    
+    if(! empty($social_pro)){
+
+        // <!-- registeing the section for social profile -->
+        $wp_customize -> add_section(
+            // <!-- this is the section added to the customizer as a reference id -->
+            'mypg_social',
+            array(
+                'title' => __('Social Plugin'),
+                'description' => __( 'Add social Icons here.' ),
+				'priority' => 160,
+				'capability' => 'edit_theme_options',
+            )
+        );
+        // <!-- looping through each profile -->
+        foreach($social_pro as $soc_pro){
+            $wp_customize -> add_setting(
+                $soc_pro['id'],
+                array(
+                    'default'=>'',
+                    'sanitize_callback'=>$soc_pro['sanitize_callback']
+                )
+
+            );
+            // <!-- controller for the profile -->
+            $wp_customize->add_control(
+                $soc_pro['id'],
+                array(
+                    'type'        => $soc_pro['type'],
+					'priority'    => $soc_pro['priority'],
+					'section'     => 'mypg_social',
+					'label'       => $soc_pro['label'],
+					'description' => $soc_pro['description'],
+                )
+            );
+        }
+
+    }
+}
