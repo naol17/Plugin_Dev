@@ -122,23 +122,14 @@ class icons extends WP_Widget {
 	
 	}
 
-	/**
-	 * Output the widget front-end.
-	 */
+	// Output the widget front-end.
+	 
 	public function widget( $args, $instance ) {
 
 		// output the before widget content.
 		echo wp_kses_post( $args['before_widget'] );
 
-		/**
-		 * Call an action which outputs the widget.
-		 *
-		 * @param $args is an array of the widget arguments e.g. before_widget.
-		 * @param $instance is an array of the widget instances.
-		 *
-		 * @hooked hd_espw_social_icons_output_widget_title.- 10
-		 * @hooked hd_espw_output_social_icons_widget_content - 20
-		 */
+		
 		do_action( 'widgedOutPut', $args, $instance );
 
 		// output the after widget content.
