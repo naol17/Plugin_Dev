@@ -178,3 +178,26 @@ class icons extends WP_Widget {
 	}
 
 }
+
+// Displaying the out put on the frontend 
+
+function iconsOutput($args, $instance){
+
+    // check if title is entered 
+
+    if(! empty($instance['title'])){
+
+        if(! empty($args['before_title'])){
+            echo wp_kses_post( $args['before_title'] );
+        }
+
+        echo esc_html( $instance['title'] );
+
+        if(! empty($args['after_title'])){
+
+            echo wp_kses_post( $args['after_title'] );
+        }
+    }
+}
+
+add_action( 'widgedOutPut','iconsOutput' );
