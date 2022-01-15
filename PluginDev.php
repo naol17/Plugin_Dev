@@ -88,99 +88,106 @@ function mypg_profile_setting($wp_customize){
 
     }
 }
-add_action( 'customize_register', 'mypg_profile_setting' )
+add_action( 'customize_register', 'mypg_profile_setting' );
 
-// class for the socials 
-     
-class icons extends WP_Widget{
 
-    public function __buildfunction(){
-        $widgetOps = array(
-            'classname' => 'My contact medias',
-            'description' => 'Display social medias','PluginDev' 
-        );
 
-        $controlOps = array(
-            'id_base' => 'My contact medias',
-        );
 
-        parent:: __buildfunction('My contact medias', 'Social Contacts', $widgetOps,$controlOps);
-    }
 
-    // to print to the actual front end of the website
+function registerIcons() {
+	register_widget( 'icons' );
+}
 
-    public function frontPageWidget($args, $instance){
-        echo wp_kses_post( $args['before_widget']);
+add_action( 'widgets_init', 'registerIcons' );
 
-        // action that out put the widget
-        do_action('icons_output', $args, $instance);
+/**
+ * Extend the widgets class for our new social icons widget.
+ */
+class icons extends WP_Widget {
 
-        // after widget
-        echo wp_kses_post( $args['after_widget'] );
+	/**
+	 * Setup the widget.
+	 */
+	public function __construct() {
 
-    }
+		/* Widget settings. */
+		$widget_ops = array(
+			'classname'   => 'my_social_icons',
+			'description' => __( 'To display social icons', 'PluginDev' ),
+		);
 
-    public function form($instance){
+		/* Widget control settings. */
+		$control_ops = array(
+			'id_base' => 'socialIcons',
+		);
 
-        // controls actual widget form 
-        // get the saved title.
+		/* Create the widget. */
+		parent::__construct( 'socialIcons', 'MySocial', $widget_ops, $control_ops );
+	
+	}
 
-	    $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+	/**
+	 * Output the widget front-end.
+	 */
+	public function widget( $args, $instance ) {
+
+		// output the before widget content.
+		echo wp_kses_post( $args['before_widget'] );
+
+		/**
+		 * Call an action which outputs the widget.
+		 *
+		 * @param $args is an array of the widget arguments e.g. before_widget.
+		 * @param $instance is an array of the widget instances.
+		 *
+		 * @hooked hd_espw_social_icons_output_widget_title.- 10
+		 * @hooked hd_espw_output_social_icons_widget_content - 20
+		 */
+		do_action( 'widgedOutPut', $args, $instance );
+
+		// output the after widget content.
+		echo wp_kses_post( $args['after_widget'] );
+
+	}
+
+	/**
+	 * Output the backend widget form.
+	 */
+	public function form( $instance ) {
+
+		// get the saved title.
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
         $disc = !empty($instance['description'])? $instance['description']:'';
-	    ?>
+		?>
 
-	    <p>
-		    <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'hd-extensible-social-profiles-widget' ); ?></label> 
-		    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-	    </p>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'PluginDev' ); ?></label> 
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		</p>
+
         <p>
-		    <label for="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>"><?php esc_attr_e( 'Description:', 'PluginDev' ); ?></label> 
-		    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'description' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-	    </p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>"><?php esc_attr_e( 'Description:', 'PluginDev' ); ?></label> 
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'description' ) ); ?>" type="text" value="<?php echo esc_attr( $disc ); ?>">
+		</p>
 
-	    <?php
-    }
+		
 
-    public function update($updateValue, $previousevalue){
-         
-        $theInstance =array();
+		<?php
 
-            // add the title and description to the empty array created 
-		$theInstance['title'] = ( ! empty( $updateValue['title'] ) ) ? strip_tags( $updateValue['title'] ) : '';
-        $theInstance['description'] = ( ! empty( $updateValue['description'] ) ) ? strip_tags( $updateValue['description'] ) : '';
+	}
 
-        return $theInstance;
+	
+	public function update( $new_instance, $old_instance ) {
 
+		// create an empty array to store new values in.
+		$instance = array();
 
-    }
+		// add the title to the array, stripping empty tags along the way.
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+		// return the instance array to be saved.
+		return $instance;
+
+	}
 
 }
-
-function register_widget(){
-    register_widget('icons');
-}
-
-add_action( 'widget_init', 'register_widget')
-
-// output the widget title 
-
-public function printTitle($args, $instance){
-    if(! empty($instance['title'])){
-
-        if ( ! empty( $args['before_title'] ) ) {
-
-			echo wp_kses_post( $args['before_title'] );
-
-		}
-
-        echo esc_html( $instance['title'] );
-
-		if ( ! empty( $args['after_title'] ) ) {
-
-            echo wp_kses_post( $args['after_title'] );
-
-		}
-    }
-}
-
-add_action( 'icons_output','printTitle' )
