@@ -181,23 +181,32 @@ class icons extends WP_Widget {
 
 // Displaying the out put on the frontend 
 
-function iconsOutput($args, $instance){
+function mypg_widget_display( $args, $instance ) {
+    
+    // if we have before widget content.
+    if ( ! empty( $instance['title'] ) ) {
 
-    // check if title is entered 
+          // if we have before title content.
+        if ( ! empty( $args['before_title'] ) ) {
 
-    if(! empty($instance['title'])){
-
-        if(! empty($args['before_title'])){
-            echo wp_kses_post( $args['before_title'] );
+              // output the before title content.
+              echo wp_kses_post( $args['before_title'] );
+  
         }
-
+  
+        // output the before widget content.
         echo esc_html( $instance['title'] );
-
-        if(! empty($args['after_title'])){
-
+  
+        // if we have after title content.
+        if ( ! empty( $args['after_title'] ) ) {
+  
+            // output the after title content.
             echo wp_kses_post( $args['after_title'] );
+  
         }
     }
+  
 }
+  
 
-add_action( 'widgedOutPut','iconsOutput' );
+add_action( 'widgedOutPut','mypg_widget_display',5,2 );
