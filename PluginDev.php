@@ -100,14 +100,10 @@ function registerIcons() {
 
 add_action( 'widgets_init', 'registerIcons' );
 
-/**
- * Extend the widgets class for our new social icons widget.
- */
+
 class icons extends WP_Widget {
 
-	/**
-	 * Setup the widget.
-	 */
+	
 	public function __construct() {
 
 		/* Widget settings. */
