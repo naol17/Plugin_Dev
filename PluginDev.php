@@ -30,7 +30,7 @@ function mypg_socialprofiles(){
 function mypg_default_profiles($profiles){
     $profiles['facebook'] = array(
         'id' => 'mypg_facebook',
-        'label'             => __( 'Facebook profile', 'https://facebook.com' ),
+        'label'             => __( 'Facebook ', 'https://facebook.com' ),
 		'class'             => 'facebook',
 		'description'       => __( 'Enter your Facebook profile URL', 'https://facebook.com' ),
 		'priority'          => 10,
@@ -41,7 +41,7 @@ function mypg_default_profiles($profiles){
     );
     $profiles['instagram'] = array(
         'id' => 'mypg_instagram',
-        'label'             => __( 'Instagram profile', 'https://instagram.com' ),
+        'label'             => __( 'Instagram ', 'https://instagram.com' ),
 		'class'             => 'Instagram',
 		'description'       => __( 'Enter your Instagram profile URL', 'https://instagram.com' ),
 		'priority'          => 10,
@@ -52,7 +52,7 @@ function mypg_default_profiles($profiles){
     );
     $profiles['twiter'] = array(
         'id' => 'mypg_twiter',
-        'label'             => __( 'Twiter profile', 'https://Twiter.com' ),
+        'label'             => __( 'Twiter ', 'https://Twiter.com' ),
 		'class'             => 'Twiter',
 		'description'       => __( 'Enter your Twiter profile URL', 'https://Twiter.com' ),
 		'priority'          => 10,
@@ -63,7 +63,7 @@ function mypg_default_profiles($profiles){
     );
     $profiles['linkedin'] = array(
         'id' => 'mypg_linkedin',
-        'label'             => __( 'linkedin profile', 'https://linkedin.com' ),
+        'label'             =>__( "Limked In", 'https://linkedin.com' ),
 		'class'             => 'linkedin',
 		'description'       => __( 'Enter your linkedin profile URL', 'https://linkedin.com' ),
 		'priority'          => 10,
@@ -74,7 +74,7 @@ function mypg_default_profiles($profiles){
     );
     $profiles['telegram'] = array(
         'id' => 'mypg_Telegram',
-        'label'             => __( 'Telegram profile', 'https://Telegram.com' ),
+        'label'             => __( 'Telegram ', 'https://Telegram.com' ),
 		'class'             => 'v',
 		'description'       => __( 'Enter your Telegram profile URL', 'https://Telegram.com' ),
 		'priority'          => 10,
