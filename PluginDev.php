@@ -39,6 +39,50 @@ function mypg_default_profiles($profiles){
         // <!-- the text we entered is not cause any harm and sanitized     -->
 		'sanitize_callback' => 'sanitize_text_field',
     );
+    $profiles['instagram'] = array(
+        'id' => 'mypg_instagram',
+        'label'             => __( 'Instagram profile', 'https://instagram.com' ),
+		'class'             => 'Instagram',
+		'description'       => __( 'Enter your Instagram profile URL', 'https://instagram.com' ),
+		'priority'          => 10,
+		'type'              => 'icon',
+		'default'           => '',
+        // <!-- the text we entered is not cause any harm and sanitized     -->
+		'sanitize_callback' => 'sanitize_text_field',
+    );
+    $profiles['twiter'] = array(
+        'id' => 'mypg_twiter',
+        'label'             => __( 'Twiter profile', 'https://Twiter.com' ),
+		'class'             => 'Twiter',
+		'description'       => __( 'Enter your Twiter profile URL', 'https://Twiter.com' ),
+		'priority'          => 10,
+		'type'              => 'icon',
+		'default'           => '',
+        // <!-- the text we entered is not cause any harm and sanitized     -->
+		'sanitize_callback' => 'sanitize_text_field',
+    );
+    $profiles['linkedin'] = array(
+        'id' => 'mypg_linkedin',
+        'label'             => __( 'linkedin profile', 'https://linkedin.com' ),
+		'class'             => 'linkedin',
+		'description'       => __( 'Enter your linkedin profile URL', 'https://linkedin.com' ),
+		'priority'          => 10,
+		'type'              => 'icon',
+		'default'           => '',
+        // <!-- the text we entered is not cause any harm and sanitized     -->
+		'sanitize_callback' => 'sanitize_text_field',
+    );
+    $profiles['telegram'] = array(
+        'id' => 'mypg_Telegram',
+        'label'             => __( 'Telegram profile', 'https://Telegram.com' ),
+		'class'             => 'v',
+		'description'       => __( 'Enter your Telegram profile URL', 'https://Telegram.com' ),
+		'priority'          => 10,
+		'type'              => 'icon',
+		'default'           => '',
+        // <!-- the text we entered is not cause any harm and sanitized     -->
+		'sanitize_callback' => 'sanitize_text_field',
+    );
 
     // <!-- returning the modified profile -->
     return $profiles;
@@ -226,6 +270,10 @@ function desplaycontent($args,  $instance){
 
             $profile_url = get_theme_mod( $socialL['id'] );
 
+            if(empty($profile_url)){
+                continue; //to the next profile
+            }
+
             // if no any url entered 
             if(empty($socialL['class'])){
 
@@ -235,6 +283,20 @@ function desplaycontent($args,  $instance){
             }
 
             ?>
+
+            <li class="socialicon__item socialicon__item--<?php echo esc_attr( $socialL['class'] ); ?>">
+			    <a target="_blank" class="socialicon__itemlink" href="<?php echo esc_url( $profile_url ); ?>">
+					<i class="icon-<?php echo esc_attr( $socialL['class'] ); ?>"></i> <span><?php echo esc_html( $socialL['label'] ); ?></span>
+				</a>
+			</li>
+
+			<?php
+
         }
+        ?>
+        </ul>
+        <?php
     }
 }
+
+add_action( 'widgedOutPut','desplaycontent',20,2 );
