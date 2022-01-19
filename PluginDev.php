@@ -210,3 +210,16 @@ function mypg_widget_display( $args, $instance ) {
   
 
 add_action( 'widgedOutPut','mypg_widget_display',5,2 );
+
+// function to display the saved url
+
+function desplaycontent($args,  $instance){
+
+    $social_lists = mypg_socialprofiles();
+
+    if ( ! empty( $social_profiles ) ) {
+        ?>
+		<ul class="my_social_icons">
+		<?php
+    }
+}
