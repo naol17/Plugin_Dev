@@ -217,9 +217,24 @@ function desplaycontent($args,  $instance){
 
     $social_lists = mypg_socialprofiles();
 
-    if ( ! empty( $social_profiles ) ) {
+    if ( ! empty( $social_lists ) ) {
         ?>
 		<ul class="my_social_icons">
 		<?php
+
+        foreach($social_lists as $socialL){
+
+            $profile_url = get_theme_mod( $socialL['id'] );
+
+            // if no any url entered 
+            if(empty($socialL['class'])){
+
+                // using the lable to form the class 
+                $socialL['class'] = strtolower(sanitize_title_with_dashes( $socialL['lable'] ));
+
+            }
+
+            ?>
+        }
     }
 }
